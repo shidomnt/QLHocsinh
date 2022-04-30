@@ -1,22 +1,17 @@
 import nodemailer from "nodemailer";
 
-const testAccount = {
-  user: "developerworking7@gmail.com",
-  pass: "Developer123",
-};
-
-async function main() {
+async function sendMail(targetAddress: string) {
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: testAccount.user,
-      pass: testAccount.pass,
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS,
     },
   });
 
   let info = await transporter.sendMail({
-    from: testAccount.user,
-    to: "hatranquang02@gmail.com, hieudzvai@gmail.com",
+    from: process.env.MAIL_USER,
+    to: targetAddress,
     subject: "Hello ✔",
     text: "Hello world?",
     html: "<b>Hello world?</b>",
@@ -26,4 +21,4 @@ async function main() {
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 }
 
-export default main;
+export default sendMail;
