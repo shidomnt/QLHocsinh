@@ -1,17 +1,22 @@
 import dotenv from "dotenv";
-import express from "express";
-import { connectDB } from "./config/db";
+import express, {json, urlencoded} from "express";
+import * as db from "./config/db";
+import router from "./router";
 
 
 dotenv.config();
-connectDB();
+db.connectDB();
 
 const app = express();
 
-const PORT = process.env.PORT || 4000;
+app.use(json());
 
-app.get("/", (req, res) => {
-  res.send("hello world");
-});
+app.use(urlencoded({
+  extended: true,
+}))
+
+app.use(router);
+
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => console.log(`Server start on PORT ${PORT}`));

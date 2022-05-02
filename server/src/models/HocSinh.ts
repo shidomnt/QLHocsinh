@@ -1,15 +1,15 @@
 import mongoose, { Schema } from 'mongoose';
-import { HocSinh } from '.';
+import { HocSinh, SchemaPerson } from '.';
 
-const SchemaHocSinh = new Schema<HocSinh>({
-  id: String,
-  hoten: String,
-  namsinh: Date,
-  diachi: String,
-  sdt: String,
-  email: String,
-  idGv: String,
-});
+const SchemaHocSinh = new Schema<HocSinh>(
+  {
+    ...SchemaPerson.obj,
+    idGv: String,
+  },
+  {
+    timestamps: true,
+  }
+);
 
 const HocSinh = mongoose.model('hocsinh', SchemaHocSinh);
 
