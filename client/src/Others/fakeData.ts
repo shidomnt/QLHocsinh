@@ -9,7 +9,7 @@ export interface DataStudent {
   hoten: string;
 }
 
-export const fakeData = JSON.parse(
+export const fakeData: DataStudent[] = JSON.parse(
   `
     [
         {

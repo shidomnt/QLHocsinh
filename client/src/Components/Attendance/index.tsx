@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   List,
   Button,
@@ -11,7 +11,10 @@ import {
   Typography,
 } from "@mui/material";
 import { DataStudent, fakeData } from "../../Others/fakeData";
+import { AppContext } from "../../Context/AppProvider";
+
 export const Attendance = () => {
+  const state = useContext(AppContext);
   const [checked, setChecked] = React.useState<number[]>([]);
   const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
     const index = checked.indexOf(parseInt(event.target.value));
@@ -45,7 +48,7 @@ export const Attendance = () => {
         </Grid>
       </ListSubheader>
       <List sx={{ mb: 7 }}>
-        {fakeData.map((value: DataStudent, key: number) => {
+        {state ? state.map((value, key) => {
           return (
             <ListItemButton key={key}>
               <ListItemText>{value.hoten}</ListItemText>
@@ -55,12 +58,11 @@ export const Attendance = () => {
                   value={value.id}
                   onChange={handleToggle}
                   edge="end"
-                  inputProps={{ "aria-label": "controlled" }}
                 ></Checkbox>
               </ListItemIcon>
             </ListItemButton>
           );
-        })}
+        }) : <div>Loading...</div>}
       </List>
     </>
   );

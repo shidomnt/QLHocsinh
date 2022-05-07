@@ -13,7 +13,7 @@ import { fakeData, DataStudent } from "../../Others/fakeData";
 export const ListStudent = () => {
   return (
     <TableContainer component={Paper}>
-      <Table aria-aria-label="simple table">
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell align="center">ID</TableCell>
@@ -26,7 +26,7 @@ export const ListStudent = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {fakeData.map((value: DataStudent, key: number) => {
+          {fakeData.map((value, key) => {
             return (
               <TableRow key={key}>
                 <TableCell align="center">{key}</TableCell>

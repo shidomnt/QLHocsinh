@@ -1,34 +1,20 @@
-import React from "react";
-import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home } from "./Components/Home";
-import { ListStudent } from "./Components/ListStudents";
-import { Attendance } from "./Components/Attendance";
-import { Setting } from "./Components/Setting";
-import { Sidebar } from "./Components/Sidebar";
-import { Box, Grid, createTheme, ThemeProvider } from "@mui/material";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      light: "#757ce8",
-      main: "#3f50b5",
-      dark: "#002884",
-      contrastText: "#fff",
-    },
-    secondary: {
-      light: "#ff7961",
-      main: "#f44336",
-      dark: "#ba000d",
-      contrastText: "#000",
-    },
-  },
-});
+import React from 'react';
+import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Home } from './Components/Home';
+import { ListStudent } from './Components/ListStudents';
+import { Attendance } from './Components/Attendance';
+import { Setting } from './Components/Setting';
+import { Sidebar } from './Components/Sidebar';
+import { Box, Grid } from '@mui/material';
+import { AppProvider } from './Context/AppProvider';
+import { ThemeProvider } from './Context/ThemeProvider';
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <div className="App">
+    <div className="App">
+      <ThemeProvider>
+      <AppProvider>
         <Box component={Grid} item lg={12}>
           <BrowserRouter>
             <Routes>
@@ -41,8 +27,9 @@ function App() {
             </Routes>
           </BrowserRouter>
         </Box>
-      </div>
-    </ThemeProvider>
+      </AppProvider>
+      </ThemeProvider>
+    </div>
   );
 }
 
