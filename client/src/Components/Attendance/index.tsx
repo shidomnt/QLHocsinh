@@ -18,16 +18,19 @@ import {
   Stack,
   Chip,
 } from "@mui/material";
+import { VariantType, useSnackbar } from "notistack";
 import { DataStudent, fakeData } from "../../Others/fakeData";
 export const Attendance = () => {
   // Logic
   const hanleSendMail = () => {
     console.log(subject, content, checked);
+
     setSubject("");
     setContent("");
     setChecked([]);
     setStudentName([]);
     handleClose();
+    handleClickOpenAlert("Gửi mail thành công", "success");
   };
   //state ui
   const [subject, setSubject] = useState<string>("");
@@ -35,6 +38,11 @@ export const Attendance = () => {
   const [checked, setChecked] = useState<string[]>([]);
   const [studentName, setStudentName] = useState<string[]>([]);
   const [open, setOpen] = useState<boolean>(false);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleClickOpenAlert = (noidung: string, variant: VariantType) => {
+    enqueueSnackbar(noidung, { variant });
+  };
 
   const handleClickOpen = () => {
     setStudentName(
@@ -143,9 +151,9 @@ export const Attendance = () => {
           ></TextField>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Trở lại</Button>
           <Button onClick={hanleSendMail} variant="contained" color="primary">
-            Subscribe
+            Gửi
           </Button>
         </DialogActions>
       </Dialog>

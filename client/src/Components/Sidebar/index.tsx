@@ -74,6 +74,7 @@ export const Sidebar = () => {
             top: 0,
             left: 0,
             right: 0,
+            zIndex: 999
           }}
           elevation={0}
         >
