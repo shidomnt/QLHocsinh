@@ -71,11 +71,11 @@ export const Sidebar = () => {
         <Paper
           sx={{
             position: "fixed",
-            bottom: 0,
+            top: 0,
             left: 0,
             right: 0,
           }}
-          elevation={3}
+          elevation={0}
         >
           <BottomNavigation
             value={selectedIndex}

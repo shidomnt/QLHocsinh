@@ -1,6 +1,6 @@
 export interface DataStudent {
   _id: string;
-  id: number;
+  id: string;
   gioitinh: string;
   ngaysinh: string;
   diachi: string;
