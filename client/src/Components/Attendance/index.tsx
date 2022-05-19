@@ -28,7 +28,7 @@ export const Attendance = () => {
     setSubject("");
     setContent("");
     setChecked([]);
-    setStudentName([]);
+    setStudents([]);
     handleClose();
     handleClickOpenAlert("Gửi mail thành công", "success");
   };
@@ -36,18 +36,23 @@ export const Attendance = () => {
   const [subject, setSubject] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [checked, setChecked] = useState<string[]>([]);
-  const [studentName, setStudentName] = useState<string[]>([]);
+  const [students, setStudents] = useState<DataStudent[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const { enqueueSnackbar } = useSnackbar();
 
   const handleClickOpenAlert = (noidung: string, variant: VariantType) => {
     enqueueSnackbar(noidung, { variant });
   };
-
+  // console.log(fakeData);
   const handleClickOpen = () => {
-    setStudentName(
-      checked.map((y) => fakeData.find((x: DataStudent) => x.id === y).hoten)
-    );
+    if (checked.length) {
+      setStudents(
+        checked
+          .map((y) => fakeData.find(({ id }) => id === y))
+          .filter((value) => value)
+      );
+    }
+
     setOpen(true);
   };
 
@@ -63,11 +68,14 @@ export const Attendance = () => {
     console.info("You clicked the delete icon.");
   };
   const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const index = checked.indexOf(event.target.value);
-    if (index === -1) {
+    // const student = event.target.value;
+    // console.log(student);
+
+    const index = checked.find((id) => id === event.target.value);
+    if (index === "undefined") {
       setChecked([...checked, event.target.value]);
     } else {
-      setChecked(checked.filter((item: string) => item !== event.target.value));
+      setChecked(checked.filter((id) => id === event.target.value));
     }
   };
 
@@ -120,13 +128,13 @@ export const Attendance = () => {
           <DialogContentText>
             Email sẽ được gửi cho những học sinh sau:
             <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
-              {studentName.map((value, index) => {
+              {students.map((value, index) => {
                 return (
                   <Chip
                     key={index}
                     variant="outlined"
                     color="primary"
-                    label={value}
+                    label={value.hoten}
                     onClick={handleClick}
                     onDelete={handleDelete}
                   />
