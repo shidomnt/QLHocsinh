@@ -46,10 +46,10 @@ export const Attendance = () => {
   // console.log(fakeData);
   const handleClickOpen = () => {
     if (checked.length) {
+      const state = checked
+          .map((y) => fakeData.filter(({ id }) => id === y)[0])
       setStudents(
-        checked
-          .map((y) => fakeData.find(({ id }) => id === y))
-          .filter((value) => value)
+        state
       );
     }
 
