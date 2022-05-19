@@ -7,8 +7,7 @@ import {
   Table,
   Paper,
 } from "@mui/material";
-import React from "react";
-import { fakeData, DataStudent } from "../../Others/fakeData";
+import { fakeData } from "../../Others/fakeData";
 
 export const ListStudent = () => {
   return (

@@ -9,7 +9,6 @@ import {
   ListItemIcon,
   ListItemText,
   Box,
-  Button,
 } from "@mui/material";
 import { Link, Outlet } from "react-router-dom";
 import { SidebarDataT, SidebarDataTeacher } from "../../Others/DataRender";
@@ -74,7 +73,7 @@ export const Sidebar = () => {
             top: 0,
             left: 0,
             right: 0,
-            zIndex: 999
+            zIndex: 999,
           }}
           elevation={0}
         >

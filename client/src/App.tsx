@@ -16,7 +16,14 @@ function App() {
     <div className="App">
       <ThemeProvider>
         <AppProvider>
-          <SnackbarProvider>
+          <SnackbarProvider
+            maxSnack={3}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            autoHideDuration={2000}
+          >
             <Box component={Grid} item lg={12}>
               <BrowserRouter>
                 <Routes>

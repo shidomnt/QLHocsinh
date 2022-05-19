@@ -46,11 +46,10 @@ export const Attendance = () => {
   // console.log(fakeData);
   const handleClickOpen = () => {
     if (checked.length) {
-      const state = checked
-          .map((y) => fakeData.filter(({ id }) => id === y)[0])
-      setStudents(
-        state
+      const state = checked.map(
+        (y) => fakeData.filter(({ id }) => id === y)[0]
       );
+      setStudents(state);
     }
 
     setOpen(true);
@@ -71,11 +70,11 @@ export const Attendance = () => {
     // const student = event.target.value;
     // console.log(student);
 
-    const index = checked.find((id) => id === event.target.value);
-    if (index === "undefined") {
+    const index = checked.indexOf(event.target.value);
+    if (index === -1) {
       setChecked([...checked, event.target.value]);
     } else {
-      setChecked(checked.filter((id) => id === event.target.value));
+      setChecked(checked.filter((id) => id !== event.target.value));
     }
   };
 
