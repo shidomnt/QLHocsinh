@@ -7,9 +7,16 @@ import {
   Table,
   Paper,
 } from "@mui/material";
-import { fakeData } from "../../Others/fakeData";
+import { useContext } from "react";
+import { AppContext } from "../../Context/AppProvider";
 
 export const ListStudent = () => {
+  const studentList = useContext(AppContext);
+
+  if (!studentList) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -25,13 +32,13 @@ export const ListStudent = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {fakeData.map((value, key) => {
+          {studentList.map((value, key) => {
             return (
               <TableRow key={key}>
                 <TableCell align="center">{key}</TableCell>
                 <TableCell>{value.hoten}</TableCell>
                 <TableCell align="center">{value.gioitinh}</TableCell>
-                <TableCell>{value?.ngaysinh}</TableCell>
+                <TableCell>{value.ngaysinh as string}</TableCell>
                 <TableCell align="center">{value.email}</TableCell>
               </TableRow>
             );

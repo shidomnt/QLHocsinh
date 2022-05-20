@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from 'react';
 import {
   List,
   Button,
@@ -17,37 +17,68 @@ import {
   DialogContentText,
   Stack,
   Chip,
-} from "@mui/material";
-import { VariantType, useSnackbar } from "notistack";
-import { DataStudent, fakeData } from "../../Others/fakeData";
+} from '@mui/material';
+import { VariantType, useSnackbar } from 'notistack';
+import { AppContext } from '../../Context/AppProvider';
+import { DataStudent } from '../../Context/reducer';
+import axios from 'axios';
+import { apiUrl } from '../../Context/reducer/constant';
+
+interface MailResponse {
+  success: boolean;
+  message: string;
+}
+
 export const Attendance = () => {
   // Logic
   const hanleSendMail = () => {
     console.log(subject, content, checked);
-
-    setSubject("");
-    setContent("");
+    const subjectCopy = subject;
+    const contentCopy = content;
+    const checkedCopy = [...checked];
+    setSubject('');
+    setContent('');
     setChecked([]);
     setStudents([]);
     handleClose();
-    handleClickOpenAlert("Gửi mail thành công", "success");
+    (async () => {
+      try {
+        const response = await axios.post<MailResponse>(`${apiUrl}/mail`, {
+          subject: subjectCopy,
+          text: contentCopy,
+          listId: checkedCopy,
+          html: ''
+        });
+        const isSuccess = response.data.success;
+        handleClickOpenAlert(
+          response.data.message,
+          isSuccess ? 'success' : 'error'
+        );
+      } catch (e) {
+        handleClickOpenAlert('Có lỗi xảy ra khi gửi mail', 'error');
+      }
+    })();
   };
   //state ui
-  const [subject, setSubject] = useState<string>("");
-  const [content, setContent] = useState<string>("");
+  const [subject, setSubject] = useState<string>('');
+  const [content, setContent] = useState<string>('');
   const [checked, setChecked] = useState<string[]>([]);
   const [students, setStudents] = useState<DataStudent[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const { enqueueSnackbar } = useSnackbar();
+  const studentList = useContext(AppContext);
+
+  if (!studentList) {
+    return <div>Loading...</div>;
+  }
 
   const handleClickOpenAlert = (noidung: string, variant: VariantType) => {
     enqueueSnackbar(noidung, { variant });
   };
-  // console.log(fakeData);
   const handleClickOpen = () => {
     if (checked.length) {
       const state = checked.map(
-        (y) => fakeData.filter(({ id }) => id === y)[0]
+        (y) => studentList.filter(({ id }) => id === y)[0]
       );
       setStudents(state);
     }
@@ -59,12 +90,12 @@ export const Attendance = () => {
     setOpen(false);
   };
   const handleClick = () => {
-    console.info("You clicked the Chip.");
+    console.info('You clicked the Chip.');
   };
 
   const handleDelete = () => {
     // setChecked(checked.filter((item: string) => item !== event.target.value));
-    console.info("You clicked the delete icon.");
+    console.info('You clicked the delete icon.');
   };
   const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
     // const student = event.target.value;
@@ -80,7 +111,7 @@ export const Attendance = () => {
 
   return (
     <>
-      <ListSubheader sx={{ p: 2, zIndex: "999" }}>
+      <ListSubheader sx={{ p: 2, zIndex: '999' }}>
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid item>
             <Typography>Danh sach lop</Typography>
@@ -103,7 +134,7 @@ export const Attendance = () => {
         </Grid>
       </ListSubheader>
       <List sx={{ mt: 3 }}>
-        {fakeData.map((value: DataStudent, key: number) => {
+        {studentList.map((value: DataStudent, key: number) => {
           return (
             <ListItemButton key={key}>
               <ListItemText>{value.hoten}</ListItemText>
@@ -113,7 +144,7 @@ export const Attendance = () => {
                   value={value.id}
                   onChange={handleToggle}
                   edge="end"
-                  inputProps={{ "aria-label": "controlled" }}
+                  inputProps={{ 'aria-label': 'controlled' }}
                 ></Checkbox>
               </ListItemIcon>
             </ListItemButton>
@@ -124,9 +155,9 @@ export const Attendance = () => {
         <DialogTitle>Viết nội dung bạn cần gửi ở đây</DialogTitle>
 
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText component={'div'}>
             Email sẽ được gửi cho những học sinh sau:
-            <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
+            <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
               {students.map((value, index) => {
                 return (
                   <Chip

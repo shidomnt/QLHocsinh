@@ -15,11 +15,16 @@ export const sendMail: Controller = async (req, res) => {
     .where('id')
     .in(listId)
     .select('email');
-  await mail.send(
+  try {
+      await mail.send(
     listEmail.map(({ email }) => email),
     subject,
     text,
     html
   );
-  res.send("OK");
+  res.json({success: true, message: 'Gửi mail thành công'});
+  } catch(e) {
+    console.log(e);
+    res.json({success: false, message: 'Gửi mail thất bại'});
+  }
 };

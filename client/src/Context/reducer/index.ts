@@ -2,9 +2,9 @@ import { Reducer } from 'react';
 
 export interface DataStudent {
   _id: string;
-  id: number;
+  id: string;
   gioitinh: string;
-  ngaysinh: Date;
+  ngaysinh: Date | string;
   diachi: string;
   idGV: string;
   email: string;

@@ -14,7 +14,6 @@ export const send = async (
     },
   });
 
-  try {
     let info = await transporter.sendMail({
       from: process.env.MAIL_USER,
       bcc: targetAddress,
@@ -25,9 +24,6 @@ export const send = async (
 
     console.log(info);
     // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-  } catch (e) {
-    console.log('Loi khi gui mail');
-  }
 };
 
 export default send;
